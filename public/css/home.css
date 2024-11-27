@@ -96,6 +96,12 @@
     align-items: center;
     gap: 5px;
   }
+  
+  .err{
+    display: none; 
+    color: red;
+    font-weight: 500;
+}
 
 
   @media (max-width: 600px) {

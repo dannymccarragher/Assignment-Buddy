@@ -37,7 +37,7 @@ app.get('/', (req, res) => {
 app.post('/submit', async (req, res) => {
 
     const conn = await connect();
-    console.log('connected to db')
+    //console.log('connected to db')
     const data = req.body;
 
     //insert data into db
@@ -46,12 +46,22 @@ app.post('/submit', async (req, res) => {
                 VALUES ('${data.assignment}','${data.description}', 
                 '${data.class}', '${data.priority}', '${data.date}')`);
 
-    res.render('confirmation');
+    res.render('confirmation', {data : data})
 });
 
-app.get('/submit', (req,res) => {
-    res.render('submit', {data : data})
+app.get('/submit', async (req,res) => {
+    const conn = await connect();
+    const data = req.body;
+    res.render('confirmation', {data : []})
 });
+
+app.get('/adminlogin', (req,res)=> {
+    res.render('admin-login');
+});
+
+app.get('/adminpage', (req,res)=> {
+    res.render('admin-page');
+})
 
 
 app.listen(PORT, () => {
