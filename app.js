@@ -15,7 +15,7 @@ const pool = mariadb.createPool({
     host: 'localhost',
     user: 'root',
     password: 'Gohabsgo1',
-    database : 'contact'
+    database : 'assignments'
 });
 
 //connect to db
@@ -29,9 +29,30 @@ async function connect() {
     }
 };
 
+//render home page
 app.get('/', (req, res) => {
     res.render('home');
 });
+
+app.post('/submit', async (req, res) => {
+
+    const conn = await connect();
+    console.log('connected to db')
+    const data = req.body;
+
+    //insert data into db
+    conn.query(`INSERT INTO assignments (assignment, description, class, priority,
+                date) 
+                VALUES ('${data.assignment}','${data.description}', 
+                '${data.class}', '${data.priority}', '${data.date}')`);
+
+    res.render('confirmation');
+});
+
+app.get('/submit', (req,res) => {
+    res.render('submit', {data : data})
+});
+
 
 app.listen(PORT, () => {
     console.log(`Server running on http://localhost:${PORT}`);
