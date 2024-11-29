@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <h1>All Tasks!</h1>
+
+  <% if (data.length > 0) { %>
+  <ul>
+    <% for (let i = 0; i < data.length; i++) { %>
+
+    <strong>Assignment: </strong> <%= data[i].assignment %> <%= data[i].lastName %> <br>
+    <strong>Description: </strong> <%= data[i].description %> <br>
+    <strong>Class: </strong> <%= data[i].class %> <br>
+    <strong>Priority:</strong> <%= data[i].priority %> <br>
+    <!-- Convert date object to string -->
+    <!-- https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/toString -->
+    <strong>Due Date: </strong> <%= data[i].date.toString().substring(0, 15) %> <br>
+    <form method="POST" action="/adminpage/<%= data[i].assignment_num %>?_method=DELETE">
+      <input type="hidden" name="assignment_num" value="<%= data[i].assignment_num %>">
+      <button type="submit">Delete</button>
+    </form>
+    <form method="GET" action="/assignmentedit">
+      <input type="hidden" name="assignment_num" value="<%= data[i].assignment_num %>">
+      <button type="submit">Update Assignment</button>
+    </form>
+    <hr>
+    <% } %>
+  </ul>
+  <% } else { %>
+  <p>No entries found in the guestbook.</p>
+  <% } %>
+</body>
+
+</html>

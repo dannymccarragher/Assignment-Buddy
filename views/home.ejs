@@ -14,7 +14,9 @@
     <h1>Assignment Buddy</h1>
   </header>
   <div class="container">
+    
     <form id="assignment-form" method="POST" action="/submit">
+      <input type="hidden" name="assignment_num">
       <label for="assignment">Enter an assignment:</label>
       <input type="text" id="assignment" name="assignment" placeholder="Enter your assignment here">
       <span id="err-assignment" class="err">
@@ -30,7 +32,7 @@
       <label for="class">Class:</label>
       <input type="text" id="class" name="class" placeholder="Which class is this for?">
       <span id="err-class" class="err">
-        &#9888 Field is required 
+        &#9888 Field is required  
     </span>
 
       <label for="priority">Set priority:</label>
