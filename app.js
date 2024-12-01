@@ -9,7 +9,7 @@ const PORT = 3000;
 
 app.use(express.static('public'));
 
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({ extended: true }));
 
 app.set('view engine', 'ejs');
 
@@ -68,11 +68,6 @@ app.get('/tasks', async (req, res) => {
     res.render('tasks', { data: data });
 });
 
-// app.post('/adminpage', async (req,res)=> {
-//     const conn = await connect();
-//     const data = await conn.query('SELECT * FROM assignments');
-//     res.render('admin-page', {data : data});
-// });
 
 app.delete('/tasks/:assignment_num', async (req, res) => {
     const conn = await connect();
@@ -82,27 +77,31 @@ app.delete('/tasks/:assignment_num', async (req, res) => {
     res.redirect('/tasks');
 });
 
-app.put('/tasks/:assignment_num', async (req, res) => {
-    const conn = await connect();
-    //const { assignment, description, class: className, priority, date } = req.body;
-    const assignment_num = req.body.assignment_num;
+// app.put('/tasks/:assignment_num', async (req, res) => {
+//     const conn = await connect();
+//     //const { assignment, description, class: className, priority, date } = req.body;
+//     const assignment_num = req.body.assignment_num;
 
-    await conn.query(
-        `UPDATE assignments 
-        SET assignment = '${data.assignment}', 
-            description = '${data.description}', 
-            class = '${data.class}', 
-            priority = '${data.priority}', 
-            date = '${data.date}' 
-        WHERE assignment_num = '${assignment_num}'`
-   );
-   res.redirect('/adminpage');
+//     await conn.query(
+//         `UPDATE assignments 
+//         SET assignment = '${data.assignment}', 
+//             description = '${data.description}', 
+//             class = '${data.class}', 
+//             priority = '${data.priority}', 
+//             date = '${data.date}' 
+//         WHERE assignment_num = '${assignment_num}'`
+//    );
+//    res.redirect('/adminpage');
 
-});
+// });
 
-app.get('/assignmentedit', (req,res) => {
-    res.render('assignment-edit');
-})
+// app.post('/assignmentedit', (req,res) => {
+//     const data = req.body;
+//     const assignment_num = req.body.assignment_num;
+//     const query = `SELECT * FROM assignments WHERE assignment_num = ${assignment_num}`;
+
+//     res.render('assignment-edit', {data : query});
+// })
 
 app.listen(PORT, () => {
     console.log(`Server running on http://localhost:${PORT}`);
