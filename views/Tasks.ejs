@@ -5,10 +5,23 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="/css/tasks.css">
+  <script src="/scripts/tasks-script.js" defer></script>
   <title>Document</title>
 </head>
 
 <body>
+  <header>
+    <nav>
+      <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="/tasks">View All Assignments</a></li>
+        <li><a href="/completedassignments">View All Completed Assignments</a></li>
+        <!-- <li><a href="/tasks">View All Tasks</a></li> -->
+
+      </ul>
+    </nav>
+  </header>
+
   <h1>All Tasks!</h1>
 
   <% if (data.length > 0) { %>
@@ -22,13 +35,13 @@
     <!-- Convert date object to string -->
     <!-- https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/toString -->
     <strong>Due Date: </strong> <%= data[i].date.toString().substring(0, 15) %> <br>
-    
+
     <form method="POST" action="/tasks/assignmentcompleted">
       <input type="hidden" name="assignment_num" value="<%= data[i].assignment_num %>">
       <% if (data[i].completed) { %>
-        <span>Completed</span>
+      <span></span>
       <% } else { %>
-        <button type="submit">Completed</button>
+      <button type="submit">Completed</button>
       <% } %>
     </form>
 
@@ -37,15 +50,27 @@
       <button type="submit">Delete Assignment</button>
     </form>
 
-      <hr>
+    <hr>
     <% } %>
   </ul>
   <% } else { %>
   <p>No assignments found.</p>
   <% } %>
 
-  <form method="GET" action="/completedassignments">
-    <button type="submit">View All Completed Assignments</button>
+  <form method="POST" action="/assignmentpriority">
+    <button type="button" onclick="toggleDropdown()">Order By Priority</button>
+
+    <div id="dropdown">
+      <select name="priority">
+        <option value="high">High</option>
+        <option value="medium">Medium</option>
+        <option value="low">Low</option>
+      </select>
+      <button type="submit" id="drop-down-button">Submit</button>
+    </div>
+  </form>
+  <form method="GET" action="/assignmentdate">
+    <button type="submit">Order By Due Date</button>
   </form>
 
 </body>

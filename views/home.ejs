@@ -11,10 +11,18 @@
 
 <body>
   <header>
+    <nav>
+      <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="/tasks">View All Assignments</a></li>
+        <li><a href="/completedassignments">View All Completed Assignments</a></li>
+        <!-- <li><a href="/tasks">View All Tasks</a></li> -->
+
+      </ul>
+    </nav>
     <h1>Assignment Buddy</h1>
   </header>
   <div class="container">
-
     <form id="assignment-form" method="POST" action="/submit">
       <input type="hidden" name="assignment_num">
       <label for="assignment">Enter an assignment:</label>
@@ -24,7 +32,7 @@
       </span>
 
       <label for="description">Assignment Description (Optional):</label>
-      <textarea id="description" name="description" placeholder="Provide more details about the assingment (optional)"></textarea>
+      <textarea id="description" name="description" placeholder="Provide more details about the assignment (optional)"></textarea>
       <span id="err-description" class="err">
         &#9888 Field is required
       </span>

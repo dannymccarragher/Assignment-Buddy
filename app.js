@@ -93,7 +93,9 @@ app.get('/completedassignments', async (req, res) =>{
     const data = await conn.query(`SELECT * FROM assignments WHERE completed = 1`);
 
     res.render('completed', {data : data});
-})
+});
+
+app.post('/')
 
 app.listen(PORT, () => {
     console.log(`Server running on http://localhost:${PORT}`);
