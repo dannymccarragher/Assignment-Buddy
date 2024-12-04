@@ -5,11 +5,11 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="/css/tasks.css">
-  <title>Document</title>
+  <title>Completed Assignments</title>
 </head>
 
 <body>
-  <h1>All Tasks!</h1>
+  <h1>Completed Assignments</h1>
 
   <% if (data.length > 0) { %>
   <ul>
@@ -22,20 +22,6 @@
     <!-- Convert date object to string -->
     <!-- https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/toString -->
     <strong>Due Date: </strong> <%= data[i].date.toString().substring(0, 15) %> <br>
-    
-    <form method="POST" action="/tasks/assignmentcompleted">
-      <input type="hidden" name="assignment_num" value="<%= data[i].assignment_num %>">
-      <% if (data[i].completed) { %>
-        <span>Completed</span>
-      <% } else { %>
-        <button type="submit">Completed</button>
-      <% } %>
-    </form>
-
-    <form method="POST" action="/tasks/<%= data[i].assignment_num %>?_method=DELETE">
-      <input type="hidden" name="assignment_num" value="<%= data[i].assignment_num %>">
-      <button type="submit">Delete Assignment</button>
-    </form>
 
       <hr>
     <% } %>
@@ -44,9 +30,6 @@
   <p>No assignments found.</p>
   <% } %>
 
-  <form method="GET" action="/completedassignments">
-    <button type="submit">View All Completed Assignments</button>
-  </form>
 
 </body>
 

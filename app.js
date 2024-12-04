@@ -59,7 +59,6 @@ app.post('/submit', async (req, res) => {
 
 app.get('/submit', async (req,res) => {
     res.render('confirmation', {data : []});
-    
 });
 
 app.get('/tasks', async (req, res) => {
@@ -87,6 +86,13 @@ app.post('/tasks/assignmentcompleted', async (req,res) => {
     await conn.query(`UPDATE assignments SET completed = true WHERE assignment_num = ${assignment_num}`)
 
     res.redirect('/tasks');
+})
+
+app.get('/completedassignments', async (req, res) =>{
+    const conn = await connect()
+    const data = await conn.query(`SELECT * FROM assignments WHERE completed = 1`);
+
+    res.render('completed', {data : data});
 })
 
 app.listen(PORT, () => {
