@@ -68,7 +68,7 @@ app.get('/tasks', async (req, res) => {
     res.render('tasks', { data: data });
 });
 
-
+// route parameters for dynamic path
 app.delete('/tasks/:assignment_num', async (req, res) => {
     const conn = await connect();
     const assignment_num = req.body.assignment_num;
@@ -76,6 +76,24 @@ app.delete('/tasks/:assignment_num', async (req, res) => {
     await conn.query(`DELETE FROM assignments WHERE assignment_num = ${assignment_num}`);
     res.redirect('/tasks');
 });
+
+
+app.post('/tasks/assignmentcompleted', async (req,res) => {
+    //Debugging
+    //console.log('Request body:', req.body); 
+    const assignment_num = req.body.assignment_num;
+    //console.log('Assignment number:', assignment_num);
+    const conn = await connect();
+    await conn.query(`UPDATE assignments SET completed = true WHERE assignment_num = ${assignment_num}`)
+
+    res.redirect('/tasks');
+})
+
+app.listen(PORT, () => {
+    console.log(`Server running on http://localhost:${PORT}`);
+});
+
+
 
 // app.put('/tasks/:assignment_num', async (req, res) => {
 //     const conn = await connect();
@@ -94,15 +112,3 @@ app.delete('/tasks/:assignment_num', async (req, res) => {
 //    res.redirect('/adminpage');
 
 // });
-
-// app.post('/assignmentedit', (req,res) => {
-//     const data = req.body;
-//     const assignment_num = req.body.assignment_num;
-//     const query = `SELECT * FROM assignments WHERE assignment_num = ${assignment_num}`;
-
-//     res.render('assignment-edit', {data : query});
-// })
-
-app.listen(PORT, () => {
-    console.log(`Server running on http://localhost:${PORT}`);
-});
