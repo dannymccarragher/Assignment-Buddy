@@ -57,21 +57,28 @@
   <p>No assignments found.</p>
   <% } %>
 
-  <form method="POST" action="/assignmentpriority">
+  <!-- do not show buttons if no assignments are found -->
+  <% if (data.length <= 0) { %>
+    <span></span>
+   <% } else { %>
+
+  <form method="POST" action="/tasks/assignmentpriority">
     <button type="button" onclick="toggleDropdown()">Order By Priority</button>
 
     <div id="dropdown">
       <select name="priority">
-        <option value="high">High</option>
-        <option value="medium">Medium</option>
-        <option value="low">Low</option>
+        <option value="High">High</option>
+        <option value="Medium">Medium</option>
+        <option value="Low">Low</option>
       </select>
       <button type="submit" id="drop-down-button">Submit</button>
     </div>
+
   </form>
   <form method="GET" action="/assignmentdate">
     <button type="submit">Order By Due Date</button>
   </form>
+  <% } %>
 
 </body>
 

@@ -134,6 +134,35 @@ p {
     font-style: italic;
 }
 
+@media(max-width: 770px){
+    h1 {
+        font-size: 2.5rem;
+    }
+
+    header{
+        padding-top: 0;
+        padding-bottom: 0;
+    }
+
+    .container {
+        padding: 15px;
+    }
+
+    button {
+        padding: 10px 15px;
+    }
+
+    nav ul li {
+        display: block;
+        margin: 10px 0;
+        text-align: center;
+        padding-top: 5px;
+        padding-bottom: 5px;
+        text-align: center;
+    }
+}
+
+
 @media (max-width: 600px) {
         h1 {
             font-size: 2.5rem;

@@ -95,7 +95,14 @@ app.get('/completedassignments', async (req, res) =>{
     res.render('completed', {data : data});
 });
 
-app.post('/')
+app.post('/tasks/assignmentpriority', async (req, res) => {
+    const conn = await connect();
+    const priority = req.body.priority
+    // console.log(priority)
+    const data = await conn.query(`SELECT * FROM assignments WHERE priority = "${priority}"`)
+
+    res.render('tasks', { data });
+})
 
 app.listen(PORT, () => {
     console.log(`Server running on http://localhost:${PORT}`);
