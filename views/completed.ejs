@@ -15,7 +15,7 @@
         <li><a href="/">Home</a></li>
         <li><a href="/tasks">View All Assignments</a></li>
         <li><a href="/completedassignments">View All Completed Assignments</a></li>
-        <!-- <li><a href="/tasks">View All Tasks</a></li> -->
+        <li><a href="/tasks">View Past-Due Assignments</a></li>
 
       </ul>
     </nav>
@@ -27,7 +27,7 @@
     <% for (let i = 0; i < data.length; i++) { %>
 
     <strong>Assignment: </strong> <%= data[i].assignment %> <%= data[i].lastName %> <br>
-    <strong>Description: </strong> <%= data[i].description %> <br>
+    <strong>Description: </strong> <%= data[i].description || "No Description Provided"%> <br>
     <strong>Class: </strong> <%= data[i].class %> <br>
     <strong>Priority:</strong> <%= data[i].priority %> <br>
     <!-- Convert date object to string -->
@@ -39,8 +39,12 @@
   </ul>
   <% } else { %>
   <p>No assignments found.</p>
-  <% } %>
 
+  <!-- Send user to homepage to enter an assignment -->
+  <form method="GET" action="/" id="all-form">
+    <button type="submit">Add Assignment Here</button>
+  </form>
+  <% } %>
 
 </body>
 

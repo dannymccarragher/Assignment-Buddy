@@ -13,11 +13,11 @@
   <header>
     <nav>
       <ul>
+        
         <li><a href="/">Home</a></li>
         <li><a href="/tasks" class="middle">View All Assignments</a></li>
         <li><a href="/completedassignments">View All Completed Assignments</a></li>
-        <!-- <li><a href="/tasks">View All Tasks</a></li> -->
-
+        <li><a href="/tasks">View Past-Due Assignments</a></li>
 
       </ul>
     </nav>
@@ -25,45 +25,49 @@
   </header>
   <div class="container">
     <form id="assignment-form" method="POST" action="/submit">
-      <input type="hidden" name="assignment_num">
-      <label for="assignment">Enter an assignment:</label>
-      <input type="text" id="assignment" name="assignment" placeholder="Enter your assignment here">
-      <span id="err-assignment" class="err">
-        &#9888 Field is required
-      </span>
+        <input type="hidden" name="assignment_num">
+        
+        <div class="form-group">
+            <label for="assignment">Enter an assignment:</label>
+            <input type="text" id="assignment" name="assignment" placeholder="Enter your assignment here">
+            <span id="err-assignment" class="err">&#9888 Field is required</span>
+        </div>
 
-      <label for="description">Assignment Description (Optional):</label>
-      <textarea id="description" name="description" placeholder="Provide more details about the assignment (optional)"></textarea>
-      <span id="err-description" class="err">
-        &#9888 Field is required
-      </span>
+        <div class="form-group">
+            <label for="description">Assignment Description (Optional):</label>
+            <textarea id="description" name="description" placeholder="Provide more details about the assignment (optional)"></textarea>
+            <span id="err-description" class="err">&#9888 Field is required</span>
+        </div>
 
-      <label for="class">Class:</label>
-      <input type="text" id="class" name="class" placeholder="Which class is this for?">
-      <span id="err-class" class="err">
-        &#9888 Field is required
-      </span>
+        <div class="form-group">
+            <label for="class">Class:</label>
+            <input type="text" id="class" name="class" placeholder="Which class is this for?">
+            <span id="err-class" class="err">&#9888 Field is required</span>
+        </div>
 
-      <label for="priority">Set priority:</label>
-      <select id="priority" name="priority">
-        <option value="">Select Priority</option>
-        <option value="Low">Low</option>
-        <option value="Medium">Medium</option>
-        <option value="High">High</option>
-      </select>
-      <span id="err-priority" class="err">
-        &#9888 Field is required
-      </span>
+        <div class="form-group">
+            <label for="priority">Set priority:</label>
+            <select id="priority" name="priority">
+                <option value="">Select Priority</option>
+                <option value="Low">Low</option>
+                <option value="Medium">Medium</option>
+                <option value="High">High</option>
+            </select>
+            <span id="err-priority" class="err">&#9888 Field is required</span>
+        </div>
 
-      <label for="due-date">Due date:</label>
-      <input type="date" id="due-date" name="date">
-      <span id="err-date" class="err">
-        &#9888 Field is required
-      </span>
+        <div class="form-group">
+            <label for="due-date">Due date:</label>
+            <input type="date" id="due-date" name="date">
+            <span id="err-date" class="err">&#9888 Field is required</span>
+        </div>
 
-      <button type="submit">Add Task</button>
+        <div class="form-group">
+            <button type="submit">Add Assignment</button>
+        </div>
     </form>
-  </div>
+</div>
+
 </body>
 
 </html>
