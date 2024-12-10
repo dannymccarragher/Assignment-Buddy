@@ -78,16 +78,34 @@ form {
     margin-top: 10px;
 }
 
-#priority-dropdown{
+#priority-dropdown {
     display: none;
-    gap: 10px;
     width: auto;
     margin-top: 5px;
     position: absolute;
     background-color: #fff;
-    padding: 5px;
-    border: 1px solid #ccc;
+    padding: 10px; 
     border-radius: 5px;
+   
+}
+
+#priority-dropdown select {
+    display: block; 
+    margin-bottom: 15px; 
+    padding: 8px;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+    width: 100%; 
+}
+
+#priority-dropdown button {
+    background-color: #45a049;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    padding: 8px 12px;
+    width: 100%;
 }
 
 button {
@@ -98,7 +116,6 @@ button {
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    /* transition: background-color 0.3s ease; */
     width: 100%;
 }
 
@@ -109,12 +126,11 @@ button {
     color: white;
     font-size: 1rem;
     margin-right: 5px;
-    width: auto;
+    width: 100%;
     border: none;
     border-radius: 5px;
     cursor: pointer;
     padding: 8px 12px;
-    /* transition: background-color 0.3s ease; */
 }
 #past-due-button{
     background-color: red;
