@@ -1,88 +1,115 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/css/tasks.css" />
+    <script src="/scripts/tasks-script.js" defer></script>
+    <title>All Assingments</title>
+  </head>
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="/css/tasks.css">
-  <script src="/scripts/tasks-script.js" defer></script>
-  <title>All Assingments</title>
-</head>
+  <body>
+    <header>
+      <nav>
+        <ul>
+          <li><a href="/">Home</a></li>
+          <li><a href="/tasks">View All Assignments</a></li>
+          <li>
+            <a href="/completedassignments">View All Completed Assignments</a>
+          </li>
+          <li><a href="/tasks/pastdue">View Past-Due Assignments</a></li>
+        </ul>
+      </nav>
+    </header>
 
-<body>
-  <header>
-    <nav>
-      <ul>
-        <li><a href="/">Home</a></li>
-        <li><a href="/tasks">View All Assignments</a></li>
-        <li><a href="/completedassignments">View All Completed Assignments</a></li>
-        <li><a href="/tasks/pastdue">View Past-Due Assignments</a></li>
+    <h1>All Tasks!</h1>
+    <!-- Only show assignments if there is any in db -->
+    <% if (data.length > 0) { %>
+    <ul>
+      <% for (let i = 0; i < data.length; i++) { %>
 
-      </ul>
-    </nav>
-  </header>
+      <strong>Assignment: </strong>
+      <%= data[i].assignment %> <%= data[i].lastName %>
+      <br />
+      <strong>Description: </strong>
+      <%= data[i].description %>
+      <br />
+      <strong>Class: </strong>
+      <%= data[i].class %>
+      <br />
+      <strong>Priority:</strong>
+      <%= data[i].priority %>
+      <br />
+      <!-- Convert date object to string -->
+      <!-- https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/toString -->
+      <strong>Due Date: </strong>
+      <%= data[i].date.toString().substring(0, 15) %>
+      <br />
 
-  <h1>All Tasks!</h1>
-  <!-- Only show assignments if there is any in db -->
-  <% if (data.length > 0) { %>
-  <ul>
-    <% for (let i = 0; i < data.length; i++) { %>
+      <form method="POST" action="/tasks/assignmentcompleted">
+        <input
+          type="hidden"
+          name="assignment_num"
+          value="<%= data[i].assignment_num %>"
+        />
+        <% if (data[i].completed) { %>
+        <span id="completed-span">Assignment Completed!</span>
+        <% } else { %>
+        <button type="submit">Completed</button>
+        <% } %>
+      </form>
 
-    <strong>Assignment: </strong> <%= data[i].assignment %> <%= data[i].lastName %> <br>
-    <strong>Description: </strong> <%= data[i].description %> <br>
-    <strong>Class: </strong> <%= data[i].class %> <br>
-    <strong>Priority:</strong> <%= data[i].priority %> <br>
-    <!-- Convert date object to string -->
-    <!-- https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/toString -->
-    <strong>Due Date: </strong> <%= data[i].date.toString().substring(0, 15) %> <br>
+      <form
+        method="POST"
+        action="/tasks/<%= data[i].assignment_num %>?_method=DELETE"
+      >
+        <input
+          type="hidden"
+          name="assignment_num"
+          value="<%= data[i].assignment_num %>"
+        />
+        <button type="submit">Delete Assignment</button>
+      </form>
 
-    <form method="POST" action="/tasks/assignmentcompleted">
-      <input type="hidden" name="assignment_num" value="<%= data[i].assignment_num %>">
-      <% if (data[i].completed) { %>
-      <span></span>
-      <% } else { %>
-      <button type="submit">Completed</button>
+      <hr />
       <% } %>
+    </ul>
+    <% } else { %>
+    <p>No assignments found.</p>
+    <form method="GET" action="/" id="all-form">
+      <button type="submit">Add Assignment Here</button>
     </form>
-
-    <form method="POST" action="/tasks/<%= data[i].assignment_num %>?_method=DELETE">
-      <input type="hidden" name="assignment_num" value="<%= data[i].assignment_num %>">
-      <button type="submit">Delete Assignment</button>
-    </form>
-
-    <hr>
     <% } %>
-  </ul>
-  <% } else { %>
-  <p>No assignments found.</p>
-  <form method="GET" action="/" id="all-form">
-    <button type="submit">Add Assignment Here</button>
-  </form>
-  <% } %>
 
-  <!-- do not show buttons if no assignments are found -->
-  <% if (data.length <= 0) { %>
+    <!-- do not show buttons if no assignments are found -->
+    <% if (data.length <= 0) { %>
     <span></span>
-   <% } else { %>
+    <% } else { %>
 
-  <form method="POST" action="/tasks/assignmentpriority">
-    <button type="button" onclick="togglePriorityDropdown()">Order By Priority</button>
+    <form method="POST" action="/tasks/assignmentpriority">
+      <button type="button" onclick="togglePriorityDropdown()">
+        Order By Priority
+      </button>
 
-    <div id="priority-dropdown">
-      <select name="priority">
-        <option value="High">High</option>
-        <option value="Medium">Medium</option>
-        <option value="Low">Low</option>
-      </select>
-      <button type="submit" id="drop-down-button">Submit</button>
-    </div>
+      <div id="priority-dropdown">
+        <select name="priority">
+          <option value="High">High</option>
+          <option value="Medium">Medium</option>
+          <option value="Low">Low</option>
+        </select>
+        <button type="submit" id="drop-down-button">Submit</button>
+      </div>
+    </form>
+    <form method="GET" action="/tasks/pastdue">
+      <button type="submit" id="past-due-button">
+        View Past-Due Assignments
+      </button>
+    </form>
+    <% } %>
 
-  </form>
-  <form method="GET" action="/tasks/pastdue">
-    <button type="submit" id="past-due-button">View Past-Due Assignments</button>
-  </form>
-  <% } %>
-
-</body>
-
+    <!-- Send user to homepage to enter an assignment -->
+    <form method="GET" action="/" id="all-form">
+      <button type="submit">Add Assignment Here</button>
+    </form>
+  </body>
 </html>

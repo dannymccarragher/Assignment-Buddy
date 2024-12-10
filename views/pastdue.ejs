@@ -8,45 +8,60 @@
 </head>
 <body>
     <header>
-      <nav>
-        <ul>
-          <li><a href="/">Home</a></li>
-          <li><a href="/tasks">View All Assignments</a></li>
-          <li><a href="/completedassignments">View All Completed Assignments</a></li>
-          <li><a href="/tasks/pastdue">View Past-Due Assignments</a></li>
-        </ul>
-      </nav>
-      <h1>Past Due Assignments</h1>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/tasks">View All Assignments</a></li>
+                <li><a href="/completedassignments">View All Completed Assignments</a></li>
+                <li><a href="/tasks/pastdue">View Past-Due Assignments</a></li>
+            </ul>
+        </nav>
+        <h1>Past Due Assignments</h1>
     </header>
   
     <% if (data.length > 0) { %>
     <ul>
-      <% 
+        <% 
+        let today = new Date(); 
+        //Check if any past-due assignments exist
+        let hasPastDue = false; 
 
-      let today = new Date(); 
-      for (let i = 0; i < data.length; i++) { 
+        for (let i = 0; i < data.length; i++) { 
+            // Don't show assignment as past due if it is completed
+            if (!data[i].completed) {
+                // Support for calculating time between 2 dates
+                let dueDate = new Date(data[i].date); 
+                let diffInTime = today - dueDate; 
+                let daysPastDue = Math.floor(diffInTime / (1000 * 60 * 60 * 24)); 
 
-        // Support for calculating time between 2 dates
-        //https://www.geeksforgeeks.org/how-to-calculate-the-number-of-days-between-two-dates-in-javascript/
-          let dueDate = new Date(data[i].date); 
-          let diffInTime = today - dueDate; 
-          let daysPastDue = Math.floor(diffInTime / (1000 * 60 * 60 * 24)); 
-      %>
-        <strong>Assignment: </strong> <%= data[i].assignment %> <%= data[i].lastName %> <br>
-        <strong>Description: </strong> <%= data[i].description || "No Description Provided" %> <br>
-        <strong>Class: </strong> <%= data[i].class %> <br>
-        <strong>Priority:</strong> <%= data[i].priority %> <br>
-        <strong>Due Date: </strong> <%= data[i].date.toString().substring(0, 15) %> <br>
-        <strong style="color: red">Days Past Due: </strong> <%= daysPastDue %> days<br>
-      <hr>
-      <% } %>
+                if (daysPastDue > 0) {
+                  // Found at least one past-due assignment
+                    hasPastDue = true; 
+        %>
+        <li>
+            <strong>Assignment: </strong> <%= data[i].assignment %> <%= data[i].lastName %> <br>
+            <strong>Description: </strong> <%= data[i].description || "No Description Provided" %> <br>
+            <strong>Class: </strong> <%= data[i].class %> <br>
+            <strong>Priority:</strong> <%= data[i].priority %> <br>
+            <strong>Due Date: </strong> <%= data[i].date.toString().substring(0, 15) %> <br>
+            <strong style="color: red">Days Past Due: </strong> <%= daysPastDue %> days<br>
+            <hr>
+        </li>
+        <% 
+                }
+            } 
+        } 
+        %>
     </ul>
+    <% if (!hasPastDue) { %>
+    <p>No assignments are Past Due!</p>
+    <% } %>
     <% } else { %>
     <p>No assignments are Past Due!</p>
+    <% } %>
   
     <form method="GET" action="/" id="all-form">
-      <button type="submit">Add Assignment Here</button>
+        <button type="submit">Add Assignment Here</button>
     </form>
-    <% } %>
 </body>
 </html>

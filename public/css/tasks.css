@@ -139,6 +139,12 @@ button {
     background-color: red;
     color: white;
 }
+#completed-span{
+    border-radius: 5px;
+    padding: 14px 14px;
+    background-color: #2196F3;
+    color: white;
+}
 
 hr {
     border: 0;
