@@ -89,6 +89,7 @@ app.post('/tasks/assignmentcompleted', async (req, res) => {
     //console.log('Assignment number:', assignment_num);
     const conn = await connect();
     await conn.query(`UPDATE assignments SET completed = true WHERE assignment_num = ${assignment_num}`)
+    await conn.end();
 
     res.redirect('/tasks');
 })
@@ -117,7 +118,8 @@ app.post('/tasks/assignmentpriority', async (req, res) => {
 
 app.get('/tasks/pastdue', async (req, res) => {
     const conn = await connect();
-    const data = await conn.query('SELECT * FROM assignments WHERE date < NOW()')
+    //Use CURRENT_DATE and NOW(). CURRENT_DATE only checks date and not time. 
+    const data = await conn.query('SELECT * FROM assignments WHERE date < CURRENT_DATE and date < NOW()')
     await conn.end();
     res.render('pastdue', { data : data})
 });
