@@ -15,6 +15,7 @@ header h1 {
   display: flex;
   justify-content: center;
   background-color: #f7f9fc;
+  color: #34495e;
   padding: 10px 0;
 }
 
