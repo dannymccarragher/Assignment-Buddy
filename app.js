@@ -1,10 +1,7 @@
 const express = require('express');
 const mariadb = require('mariadb');
 const methodOverride = require('method-override');
-
-
 const app = express();
-
 const PORT = 3000;
 
 app.use(express.static('public'));
@@ -13,15 +10,18 @@ app.use(express.urlencoded({ extended: true }));
 
 app.set('view engine', 'ejs');
 
+require('dotenv').config();
+
 // https://expressjs.com/en/resources/middleware/method-override.html
 app.use(methodOverride('_method'));
 
 const pool = mariadb.createPool({
     host: 'localhost',
     user: 'root',
-    password: 'Gohabsgo1',
+    password: process.env.password,
     database: 'assignments'
 });
+
 
 //connect to db
 async function connect() {
@@ -66,7 +66,6 @@ app.get('/tasks', async (req, res) => {
         const conn = await connect();
         const data = await conn.query('SELECT * FROM assignments');
         res.render('tasks', { data: data });
-        await conn.end();
     }
     catch (err) {
         console.log("Error: " + err)
@@ -116,11 +115,11 @@ app.post('/tasks/assignmentpriority', async (req, res) => {
     res.render('tasks', { data });
 });
 
-app.post('/tasks/pastdue', async (req, res) => {
-
-
-    res.render('tasks', { data })
-
+app.get('/tasks/pastdue', async (req, res) => {
+    const conn = await connect();
+    const data = await conn.query('SELECT * FROM assignments WHERE date < NOW()')
+    await conn.end();
+    res.render('pastdue', { data : data})
 });
 
 app.listen(PORT, () => {
